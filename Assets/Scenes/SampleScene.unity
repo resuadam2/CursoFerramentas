@@ -1202,6 +1202,42 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3895779406262561068, guid: 948a90beab53cc34f8b100041f7fbe49, type: 3}
+      propertyPath: questionData.type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3895779406262561068, guid: 948a90beab53cc34f8b100041f7fbe49, type: 3}
+      propertyPath: questionData.category
+      value: Geography
+      objectReference: {fileID: 0}
+    - target: {fileID: 3895779406262561068, guid: 948a90beab53cc34f8b100041f7fbe49, type: 3}
+      propertyPath: questionData.question
+      value: Gothenburg is the capital of Sweden.
+      objectReference: {fileID: 0}
+    - target: {fileID: 3895779406262561068, guid: 948a90beab53cc34f8b100041f7fbe49, type: 3}
+      propertyPath: questionData.difficulty
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3895779406262561068, guid: 948a90beab53cc34f8b100041f7fbe49, type: 3}
+      propertyPath: questionData.correct_answer
+      value: False
+      objectReference: {fileID: 0}
+    - target: {fileID: 3895779406262561068, guid: 948a90beab53cc34f8b100041f7fbe49, type: 3}
+      propertyPath: questionData.incorrect_answers.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3895779406262561068, guid: 948a90beab53cc34f8b100041f7fbe49, type: 3}
+      propertyPath: 'questionData.incorrect_answers.Array.data[0]'
+      value: True
+      objectReference: {fileID: 0}
+    - target: {fileID: 3895779406262561068, guid: 948a90beab53cc34f8b100041f7fbe49, type: 3}
+      propertyPath: 'questionData.incorrect_answers.Array.data[1]'
+      value: Frog
+      objectReference: {fileID: 0}
+    - target: {fileID: 3895779406262561068, guid: 948a90beab53cc34f8b100041f7fbe49, type: 3}
+      propertyPath: 'questionData.incorrect_answers.Array.data[2]'
+      value: Rabbit
+      objectReference: {fileID: 0}
     - target: {fileID: 4624880157493829129, guid: 948a90beab53cc34f8b100041f7fbe49, type: 3}
       propertyPath: m_Name
       value: Question

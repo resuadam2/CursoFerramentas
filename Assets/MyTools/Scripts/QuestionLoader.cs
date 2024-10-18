@@ -85,6 +85,11 @@ public class QuestionLoader : MonoBehaviour
         StartCoroutine(GetText());
     }
 
+    public async void LoadDataWithString(string url)
+    {
+
+    }
+
     [ContextMenu("LoadQuestionData")]
     public async void LoadQuestionDataInUI()
     {

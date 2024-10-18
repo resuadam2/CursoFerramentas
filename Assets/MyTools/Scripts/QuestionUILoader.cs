@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -15,7 +17,7 @@ public class QuestionUILoader : MonoBehaviour
     public QuestionData questionData;
 
     [ContextMenu("LoadQuestionData")]
-    public async void InflateData()
+    public async void LoadQuestionData()
     {
         DataObtained d = await
         QuestionLoader.GetDataFromURL("https://opentdb.com/api.php?amount=1"); // cargamos una sola pregunta para comprobar que funciona
@@ -26,26 +28,67 @@ public class QuestionUILoader : MonoBehaviour
         }
     }
 
-    [ContextMenu("Inflate")]
-    public void LoadUI()
+    private void RandomizeResponses()
+    {
+        List<string> answers = new List<string>();
+        answers.Add(questionData.correct_answer);
+        foreach (string res in questionData.incorrect_answers)
+        {
+            answers.Add(res);
+        }
+
+        List<string> randomizedAnswers = new List<string>();
+        // TODO: Randomize the answers and create the buttons
+    }
+
+    [ContextMenu("InflateUI")]
+    public void InflateUI()
     {
         
         if (questionData != null)
         {
+            ClearUI();
             questionTitle.text = questionData.question;
-            ResponseButtonPrefab correctAnswer = Instantiate<ResponseButtonPrefab>(buttonResponsePrefab, responseCanvasContainer);
-            correctAnswer.responseText.text = questionData.correct_answer;
-            foreach (string res in questionData.incorrect_answers)
-            {
-                ResponseButtonPrefab incorrectAnswer = Instantiate<ResponseButtonPrefab>(buttonResponsePrefab, responseCanvasContainer);
-                incorrectAnswer.responseText.text = res;
-            }
+            RandomizeResponses();
         }
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [ContextMenu("ClearUI")]
+    public void ClearUI()
     {
-        
+        questionTitle.text = "";
+        while (responseCanvasContainer.childCount > 0)
+        {
+            DestroyImmediate(responseCanvasContainer.GetChild(0).gameObject);
+        }
+    }
+
+    [ContextMenu("LoadAndInflate")]
+    public void LoadAndInflate()
+    {
+        LoadQuestionData();
+        InflateUI();
+    }
+
+    public void ButtonClicked(string response)
+    {
+        if (response == questionData.correct_answer)
+        {
+            Debug.Log("Respuesta correcta");
+        }
+        else
+        {
+            Debug.Log("Respuesta incorrecta");
+        }
+    }
+
+        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        void Start()
+    {
+        if (questionData.question.Length == 0)
+        {
+            LoadQuestionData();
+        }
+        InflateUI();
     }
 }

@@ -16,6 +16,9 @@ public class QuestionUILoader : MonoBehaviour
 
     public QuestionData questionData;
 
+    [Tooltip("Variable para saber si la pregunta ha sido cargada")]
+    public bool isDataLoaded = false; // Variable para saber si la pregunta ha sido cargada
+
     [ContextMenu("LoadQuestionData")]
     public async void LoadQuestionData()
     {
@@ -28,6 +31,11 @@ public class QuestionUILoader : MonoBehaviour
         }
     }
 
+    public string GetQuestionString()
+    {
+        return questionData.question;
+    }
+
     private void RandomizeResponses()
     {
         List<string> answers = new List<string>();
@@ -38,7 +46,22 @@ public class QuestionUILoader : MonoBehaviour
         }
 
         List<string> randomizedAnswers = new List<string>();
-        // TODO: Randomize the answers and create the buttons
+        List<string> randomList = new List<string>();
+        while (answers.Count > 0)
+        {
+            System.Random random = new System.Random();
+            int randomNumber = random.Next(0, answers.Count);
+            randomList.Add(answers[randomNumber]);
+            answers.RemoveAt(randomNumber);
+        }
+
+        foreach (string response in randomList)
+        {
+            ResponseButtonPrefab answerButon = Instantiate<ResponseButtonPrefab>(buttonResponsePrefab, responseCanvasContainer);
+            answerButon.responseText.text = response;
+            answerButon.questionUILoader = this;
+
+        }
     }
 
     [ContextMenu("InflateUI")]
@@ -51,6 +74,7 @@ public class QuestionUILoader : MonoBehaviour
             questionTitle.text = questionData.question;
             RandomizeResponses();
         }
+        isDataLoaded = true;
     }
 
     [ContextMenu("ClearUI")]
@@ -61,6 +85,7 @@ public class QuestionUILoader : MonoBehaviour
         {
             DestroyImmediate(responseCanvasContainer.GetChild(0).gameObject);
         }
+        isDataLoaded = false;
     }
 
     [ContextMenu("LoadAndInflate")]

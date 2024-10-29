@@ -14,7 +14,6 @@ public class QuestionUILoader : MonoBehaviour
     [Tooltip("Prefab del botón con una posible respuesta")]
     public ResponseButtonPrefab buttonResponsePrefab;
 
-    public QuestionData questionData;
 
     [Tooltip("Variable para saber si la pregunta ha sido cargada")]
     public bool isDataLoaded = false; // Variable para saber si la pregunta ha sido cargada
@@ -30,6 +29,9 @@ public class QuestionUILoader : MonoBehaviour
             questionData = d.finalResults[0]; // Guardamos la pregunta en la variable questionData
         }
     }
+
+    public QuestionData questionData;
+
 
     public string GetQuestionString()
     {
@@ -100,10 +102,12 @@ public class QuestionUILoader : MonoBehaviour
         if (response == questionData.correct_answer)
         {
             Debug.Log("Respuesta correcta");
+            TriviaManager.instance.Questionresponsed(this, true);
         }
         else
         {
             Debug.Log("Respuesta incorrecta");
+            TriviaManager.instance.Questionresponsed(this, false);
         }
     }
 
@@ -116,4 +120,10 @@ public class QuestionUILoader : MonoBehaviour
         }
         InflateUI();
     }
+
+    internal async void Initialize()
+    {
+        LoadQuestionData();
+    }
+
 }

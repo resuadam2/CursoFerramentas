@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 /** Example of response form the trivial api:
@@ -61,6 +62,37 @@ public class QuestionRawData
     public string question;
     public string correct_answer;
     public List<string> incorrect_answers;
+}
+
+[CustomPropertyDrawer(typeof(QuestionData))]
+public class QuestionDataDrawer : PropertyDrawer
+{
+    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+    {
+        base.OnGUI(position, property, label);
+        SerializedProperty questionTitle = property.FindPropertyRelative("question");
+        SerializedProperty correctAnswer = property.FindPropertyRelative("correct_answer");
+        SerializedProperty incorrectAnswers = property.FindPropertyRelative("incorrect_answers");
+        SerializedProperty type = property.FindPropertyRelative("type");
+        SerializedProperty difficulty = property.FindPropertyRelative("difficulty");
+        SerializedProperty category = property.FindPropertyRelative("category");
+
+        EditorGUILayout.Space();
+        EditorGUILayout.LabelField("Question: ", questionTitle.stringValue);
+        EditorGUILayout.BeginVertical();
+        EditorGUILayout.LabelField("Correct Answer: ", correctAnswer.stringValue);
+        for (int i = 0; i < incorrectAnswers.arraySize; i++)
+        {
+            EditorGUILayout.LabelField("Incorrect Answer " + i + ": ", incorrectAnswers.GetArrayElementAtIndex(i).stringValue);
+        }
+        EditorGUILayout.EndVertical();
+        EditorGUILayout.Space();
+        EditorGUILayout.LabelField("Type: ", type.enumNames[type.enumValueIndex]);
+        EditorGUILayout.LabelField("Difficulty: ", difficulty.enumNames[difficulty.enumValueIndex]);
+        EditorGUILayout.LabelField("Category: ", category.stringValue);
+
+
+    }
 }
 
 [Serializable]
